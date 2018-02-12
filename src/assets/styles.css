@@ -1,0 +1,26 @@
+/* TBDC
+   Ankit Patil */
+
+/* Global */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+.manager {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 30px;
+  overflow: auto;
+}
+.manager .stats {
+  width: 100%;
+}
+.manager .modules {
+  width: 20%;
+  float: left;
+}
+.manager .values {
+  width: 80%;
+  float: right;
+}
