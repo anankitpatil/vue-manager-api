@@ -2,25 +2,98 @@
    Ankit Patil */
 
 /* Global */
+
 html, body {
   margin: 0;
   padding: 0;
+  font-family: Helvetica;
 }
+/* Manager */
+
 .manager {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0;
   overflow: auto;
+  font-size: 18px;
+}
+.manager a {
+  text-decoration: none;
+  color: #000;
 }
 .manager .stats {
-  width: 100%;
+  width: calc(100% - 30px);
+  padding: 0 15px;
+  line-height: 60px;
+  background: #EEE;
+}
+.manager .stats a {
+  float: right;
+  background: rgba(255, 0, 0, 0.1);
+  padding: 0 30px;
+  margin-right: -15px;
 }
 .manager .modules {
   width: 20%;
   float: left;
 }
+.manager .modules a {
+  padding: 0 15px;
+  line-height: 60px;
+  border-bottom: 1px solid #EEE;
+  display: block;
+}
 .manager .values {
   width: 80%;
   float: right;
+}
+.manager .values .filter input {
+  -webkit-appearance: none;
+  border: 1px solid #EEE;
+  width: calc(100% - 198px);
+  border-top: 0;
+  margin: 0;
+  height: 58px;
+  font-size: 18px;
+  line-height: 24px;
+  padding-left: 15px;
+}
+.manager .values .filter input[type="button"] {
+  height: 61px;
+  width: 180px;
+  text-align: center;
+  margin: 0;
+  float: right;
+  background: #EEE;
+}
+.manager .values .sort {
+  border-bottom: 3px solid #EEE;
+  line-height: 48px;
+  overflow: auto;
+}
+.manager .values .sort span, .manager .values ul span {
+  padding: 0 15px;
+  float: left;
+  display: inline-block;
+  width: calc(40% - 31px);
+  border-left: 1px solid #EEE;
+  cursor: pointer;
+  min-height: 1px;
+}
+.manager .values .sort span:last-child, .manager .values ul span:last-child {
+  width: calc(20% - 32px);
+  border-right: 1px solid #EEE;
+}
+.manager .values ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.manager .values ul li {
+  display: block;
+  line-height: 60px;
+  border-bottom: 1px solid #EEE;
+  overflow: auto;
+  cursor: pointer;
 }

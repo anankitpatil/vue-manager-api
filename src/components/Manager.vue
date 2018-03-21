@@ -1,20 +1,29 @@
 <template>
 <div class="manager">
   <div class="stats">
-    Logged in as <a href="#" @click.prevent="logout()">Logout</a>
+    Logged in as {{user.name}} <a href="#" @click.prevent="logout()"> Logout</a>
   </div>
 
   <div class="modules">
-    <a href="#" @click.prevent="loadModule('user')">Users</a>
+    <a href="#" @click.prevent="loadModule('user')"> Users</a>
   </div>
   <div class="values">
     <div v-if="user.isAdmin">
       <div class="filter">
         <input type="text" />
-        <input type="button">Export as CSV</input>
+        <input type="button" value="Export as CSV" />
+      </div>
+      <div class="sort">
+        <span>Username</span>
+        <span>Full Name</span>
+        <span>Date created</span>
       </div>
       <ul>
-        <li v-for="_user in users">{{_user.username}}</li>
+        <li v-for="_user in users">
+          <span>{{_user.username}}</span>
+          <span>{{_user.name}}</span>
+          <span>{{_user.created}}</span>
+        </li>
       </ul>
     </div>
     <div v-else>User data is only accessible by admin.</div>
@@ -34,7 +43,7 @@ export default {
     }
   },
   beforeMount() {
-    auth.checkAuth()
+    auth.checkAuth(this)
   },
   mounted() {
     if (auth.user.isAdmin) auth.getAllUsers(this)
@@ -56,7 +65,7 @@ export default {
     },
   },
   watch: {
-    'users': function(value) {
+    'user': function(value) {
       console.log(value)
     }
   }

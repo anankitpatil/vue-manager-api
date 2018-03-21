@@ -4,12 +4,17 @@ import Vue from 'vue'
 import VueResource from 'vue-resource'
 import App from './App'
 import router from './router'
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
 
 // for http calls
 Vue.use(VueResource)
 
 /* global CSS */
 require('./assets/styles.css')
+
+/* global fontAwesome */
+Vue.component('icon', Icon)
 
 Vue.config.productionTip = false
 

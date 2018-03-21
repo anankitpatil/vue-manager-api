@@ -1,5 +1,7 @@
 import router from '@/router/index'
 
+var moment = require('moment')
+
 // endpoints
 const API_URL = 'http://localhost:9890/'
 const LOGIN_URL = API_URL + 'api/login'
@@ -10,7 +12,8 @@ export default {
   // Auth user object
   user: {
     authenticated: false,
-    isAdmin: false
+    isAdmin: false,
+    name: ''
   },
 
   login(context, creds, redirect) {
@@ -23,8 +26,10 @@ export default {
       localStorage.setItem('token', result.body.token)
       // Set global auth state
       this.user.authenticated = true
-      // Save admin status on browser
-      localStorage.setItem('access', result.body.data[0].admin.data[0])
+      // Save id on browser
+      localStorage.setItem('id', result.body.data[0].id)
+      // Set global user's name
+      this.user.name = result.body.data[0].name
       // Check if admin
       if (1 == result.body.data[0].admin.data[0]) {
         // Save admin status locally
@@ -65,10 +70,28 @@ export default {
     router.push('/login')
   },
 
-  checkAuth() {
-    var jwt = localStorage.getItem('token')
+  checkAuth(context) {
+    context.$http.get(SECURE_URL + '/' + localStorage.getItem('id'), {
+      headers: {
+        "Content-Type": "application/json",
+        "Token": localStorage.getItem('token')
+      }
+    }).then(result => {
+      this.user.authenticated = true
+      this.user.name = result.body.data[0].name
+      if (1 == result.body.data[0].admin.data[0]) {
+        // Save admin status locally
+        this.user.isAdmin = true
+      } else {
+        this.user.isAdmin = false
+      }
+    }, error => {
+      console.error(error)
+    })
+    /*var jwt = localStorage.getItem('token')
     if (jwt) {
       this.user.authenticated = true
+      this.user.name = localStorage.getItem('name')
       if (1 == localStorage.getItem('access')) {
         // Save admin status locally
         this.user.isAdmin = true
@@ -77,7 +100,7 @@ export default {
       }
     } else {
       this.user.authenticated = false
-    }
+    }*/
   },
 
   getAuthHeader() {
@@ -93,6 +116,11 @@ export default {
         "Token": localStorage.getItem('token')
       }
     }).then(result => {
+      // Correct dates
+      for(var i = 0; i < result.body.length; i++) {
+        result.body[i].created = moment(result.body[i].created).format('D/M/YY h:m');
+        console.log(result.body[i].created)
+      }
       // Send users to manager
       context.users = result.body
 

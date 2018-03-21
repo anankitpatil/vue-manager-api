@@ -28,7 +28,6 @@ export default new Router({
 })
 
 function requireAuth(to, from, next) {
-  auth.checkAuth()
   if (!auth.user.authenticated) {
     next({
       path: '/login',
